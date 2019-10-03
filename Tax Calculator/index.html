@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Tax Calculator</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div id="container">
+            <h1>Tax Calculator</h1>
+            <form> 
+                <br>
+                <label>Bill Amount: </label>
+                <input id="billamt" type="text" placeholder="Enter bill amount" /><br>
+                <span id="err"></span>
+                <button type="button" onclick="calculate()">Calculate</button>
+            </form>
+            <div id="totalamt">
+                
+            </div>
+        </div>
+
+        <script>
+            function calculate() {
+                document.getElementById('err').style.display = 'none';
+                document.getElementById('totalamt').style.display = 'none';
+                var inp = document.getElementById('billamt').value;
+
+                if(inp.match(/^-{0,1}\d+$/) || inp.match(/^\d+\.\d+$/)){
+
+                    var billamt = parseFloat(inp);
+                    var service = billamt * 0.1;
+                    var gst = billamt * 0.05;
+                    var tax = service + gst;
+                    var final = billamt + tax;
+                    var dis = document.getElementById('totalamt');
+                    dis.style.display = 'block';
+                    
+                    var details = `
+                    <label>Service charge(10%): <span>${service.toFixed(2)} Rs.</span> </label><br>
+                    <label>GST(5%): <span>${gst.toFixed(2)} Rs.</span> </label><br>
+                    <label>Total Tax: <span>${tax.toFixed(2)} Rs.</span> </label><br>
+                    <label>Final Amount: <span>${final.toFixed(2)} Rs.</span> </label>
+                    `;
+                    dis.innerHTML = details;
+                }else {
+                    if(inp==''){
+                        document.getElementById('err').innerHTML = "Please enter amount..!!";
+                    }else{
+                        document.getElementById('err').innerHTML = "Please enter a valid number..!!";
+                    }
+                    document.getElementById('err').style.display = 'block';
+                }
+            }
+        </script>
+    </body>
+</html>
